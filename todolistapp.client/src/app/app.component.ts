@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Task } from './app.model';
+import { TodoListService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +9,92 @@ import { Task } from './app.model';
   encapsulation: ViewEncapsulation.None 
 })
 export class AppComponent {
-  // Array containing the list of tasks
-  public submitasks: Task[] = [];
 
-  constructor(private http: HttpClient) {}
+  
+  public tasks: Task[] = [];
+  public newTask: Task = new Task();
+
+  constructor(private todoListService: TodoListService) {}
+
+  ngOnInit() {
+    this.getTasks();
+  }
+
+  getTasks() {
+    this.todoListService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+      console.log('Attività recuperate:', tasks);
+      console.log('Attività in AppComponent:', this.tasks);
+  
+      /*
+      for (const task of this.tasks) {
+        const taskElement = document.getElementById(`task-${task.Id}`);
+      
+        if (taskElement) {
+          const deleteButton = taskElement?.querySelector('.delete');
+          const editButton = taskElement?.querySelector('.edit');
+      
+          deleteButton?.addEventListener('click', () => this.deleteTask(task.Id));
+          editButton?.addEventListener('click', () => this.editTask(task.Id, task.Title, task.Contents));
+        } else {
+          console.error('Elemento attività non trovato per ID:', task.Id);
+        }
+      }*/
+      
+    });
+  }
+  
+
+  /*Task(taskId: string, updatedTitle: string, updatedContents: string): void {
+    const updatedTask = this.tasks.find(task => task.Id === taskId);
+  
+    if (updatedTask) {
+      updatedTask.Title = updatedTitle;
+      updatedTask.Contents = updatedContents;
+  
+      console.log('Task prima dell\'aggiornamento:', updatedTask);
+  
+      this.todoListService.updateTask(updatedTask).subscribe(() => {
+        console.log('Task aggiornata con successo:', updatedTask);
+      });
+    } else {
+      console.error('Task non trovata per l\'ID:', taskId);
+    }
+  }
+  
+  deleteTask(taskId: string): void {
+    const updatedTaskIndex = this.tasks.findIndex(task => task.Id === taskId);
+  
+    if (updatedTaskIndex !== -1) {
+      console.log('Task da eliminare:', this.tasks[updatedTaskIndex]);
+  
+      this.todoListService.deleteTask(taskId).subscribe(() => {
+        this.tasks.splice(updatedTaskIndex, 1);
+        console.log('Task eliminata con successo:', taskId);
+      });
+    } else {
+      console.error('Task non trovata per l\'ID:', taskId);
+    }
+  }*/
+  
+
 
   // Function onSubmit handles the form submission event
   onSubmit(event: Event): void {
     event.preventDefault(); // Prevents the default form submission behavior
 
     // Retrieve the value entered in 'new-task-input' and 'new-contents-input'
-    const task = (document.getElementById('new-task-input') as HTMLInputElement).value;
+    const title = (document.getElementById('new-task-input') as HTMLInputElement).value;
     const contents = (document.getElementById('new-contents-input') as HTMLInputElement).value;
+
+    this.newTask = new Task(undefined, title, contents, undefined);
+    
 
     // Retrieve the 'tasks' element from the DOM
     const tasksElement = document.getElementById('tasks');
-    
-    // Check if the 'tasks' element exists, otherwise exit
-    if (tasksElement === null) {
-      return;
-    }
 
     // Check if the input field is empty, if so, exit
-    if (task === '' || contents === '') {
+    if (title === '' || contents === '') {
       return;
     }
 
@@ -47,7 +110,7 @@ export class AppComponent {
     const taskInputEl = document.createElement('input');
     taskInputEl.classList.add('text');
     taskInputEl.type = 'text';
-    taskInputEl.value = task;
+    taskInputEl.value = title;
     taskInputEl.setAttribute('readonly', 'readonly');
     taskContentEl.appendChild(taskInputEl);
 
@@ -78,6 +141,9 @@ export class AppComponent {
     // Add the new task to the task list in HTML
     if (tasksElement) {
       tasksElement.appendChild(taskEl);
+      console.log('Task aggiunta all\'elemento HTML:', taskEl);
+    } else {
+      console.error('Elemento HTML con ID \'tasks\' non trovato!');
     }
 
     // Clear input fields after adding the task
@@ -107,5 +173,14 @@ export class AppComponent {
         (document.getElementById('new-contents-input') as HTMLInputElement).value = '';
       }
     });
+
+    this.todoListService.createTask(this.newTask).subscribe((task) => {
+      // Aggiungi la nuova task all'elenco visibile in frontend solo dopo averla creata con successo nel backend
+      this.tasks.push(task);
+      // Resetta il form dopo l'invio
+      this.newTask = new Task();
+      console.log('Nuova task aggiunta:', task);
+    });
+    
   }
 }
