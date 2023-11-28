@@ -1,22 +1,196 @@
-﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+﻿/* Variable definitions */
+:root {
+  --dark: #374151;
+  --darker: #1f2937;
+  --darkest: #111827;
+  --grey: #6b7280;
+  --pink: #ec4899;
+  --purple: #8b5cf6;
+  --light: #eee;
 }
 
-tr:nth-child(even) {
-    background: #F2F2F2;
+/* Global styles */
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Fira sans", sans-serif;
 }
 
-tr:nth-child(odd) {
-    background: #FFF;
+/* Body styles */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #fff;
+  background-color: #374151;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+/* Header styles */
+header {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-table {
-    margin: 0 auto;
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+/* Form styles */
+#new-task-form {
+  display: flex;
+}
+
+input,
+button {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* Styles for new-task-input */
+#new-task-input {
+  flex: 1 1 0%;
+  background-color: #1f2937;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+  color: #3490dc;
+  font-size: 1.25rem;
+}
+
+#new-task-input::placeholder {
+  color: #6b7280;
+}
+
+/* Styles for new-contents-input */
+#new-contents-input {
+  flex: 1 1 0%;
+  background-color: #1f2937;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+  color: #ec4899;
+  font-size: 1rem;
+}
+
+#new-contents-input::placeholder {
+  color: #6b7280;
+}
+
+/* Submit button styles */
+#new-task-submit {
+  color: #ec4899;
+  font-size: 1.25rem;
+  font-weight: 700;
+  background-image: linear-gradient(to right, #ec4899, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+#new-task-submit:hover {
+  opacity: 0.8;
+}
+
+#new-task-submit:active {
+  opacity: 0.6;
+}
+
+/* Main section styles */
+main {
+  flex: 1 1 0%;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Task list styles */
+.task-list {
+  padding: 1rem;
+}
+
+.task-list h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+/* Task styles */
+#tasks .task {
+  display: flex;
+  justify-content: space-between;
+  background-color: #111827;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.task .content {
+  flex: 1 1 0%;
+}
+
+.task .content .text {
+  color: #eee;
+  font-size: 1.125rem;
+  width: 100%;
+  display: block;
+  transition: 0.4s;
+}
+
+/* Title style */
+.task .content .text[readonly]:first-of-type {
+  color: #3490dc;
+  font-size: 1.5rem;
+}
+
+/* Content style */
+.task .content .text[readonly]:last-of-type {
+  color: #ec4899;
+  font-size: 1rem;
+}
+
+/* Task action buttons styles */
+.task .actions {
+  display: flex;
+  margin: 0 -0.5rem;
+}
+
+.task .actions button {
+  cursor: pointer;
+  margin: 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.4s;
+}
+
+.task .actions button:hover {
+  opacity: 0.8;
+}
+
+.task .actions button:active {
+  opacity: 0.6;
+}
+
+.task .actions .edit {
+  background-image: linear-gradient(to right, #ec4899, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.task .actions .delete {
+  color: crimson;
+}
+
+/* Additional styles */
+#prova {
+  border: 2px solid red;
 }

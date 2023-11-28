@@ -6,6 +6,7 @@ namespace ToDoListApp.Server.DbContext
 {
     public class ToDoListAppDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
+        public DbSet<ToDoList> ToDoLists { get; set; }
         public ToDoListAppDbContext(DbContextOptions options) : base(options)
         {
            
