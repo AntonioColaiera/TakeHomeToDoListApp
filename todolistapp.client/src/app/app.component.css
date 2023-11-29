@@ -43,8 +43,7 @@ button {
   background: none;
 }
 
-input[name="Title"],
-input[name="Contents"] {
+input[name="Title"] {
   flex: 1 1 0%;
   background-color: #1f2937;
   padding: 1rem;
@@ -52,6 +51,16 @@ input[name="Contents"] {
   margin-right: 1rem;
   font-size: 1.2rem;
   color: #3490dc;
+  
+}
+
+input[name="Contents"] {
+  flex: 1 1 0%;
+  background-color: #1f2937;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-right: 1rem;
+  font-size: 1.2rem;
   color: #ec4899;
 }
 

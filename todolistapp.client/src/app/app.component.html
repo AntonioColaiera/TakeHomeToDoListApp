@@ -1,60 +1,52 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>To Do list 2023</title>
-
-	<link rel="stylesheet" href="app.component.css" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do list 2023</title>
+  <link rel="stylesheet" href="app.component.css" />
 </head>
 <body>
-	<header>
-		<h1>TO DO LIST:</h1>
-		<form (ngSubmit)="addTask()">
-			<input type="text" name="Title" [(ngModel)]="Title" placeholder="Title" />
-			<input
-				type="text"
-				name="Contents"
-				[(ngModel)]="Contents"
-				placeholder="Your activities"
-			/>
-			<input type="submit" value="Add task" />
-		</form>
-	</header>
-	<main>
-		<section class="task-list">
-			<h2>Tasks:</h2>
-			<div id="tasks">
-				<div class="task" *ngFor="let task of tasks; let i = index">
-					<div class="content">
-						<input
-							type="text"
-							class="text"
-							[value]="task.Title"
-							[readonly]="!editMode[i]"
-							#taskInput
-						/>
-						<input
-							type="text"
-							class="text"
-							[value]="task.Contents"
-							[readonly]="!editMode[i]"
-							#taskInputContent
-						/>
-					</div>
-					<div class="actions">
-						<button
-							class="edit"
-							(click)="toggleEdit(i, taskInput, taskInputContent)"
-						>
-							{{ editButtonText }}
-						</button>
-						<button class="delete" (click)="deleteTask(i)">Delete</button>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
+  <header>
+    <h1>TO DO LIST:</h1>
+    <form (ngSubmit)="addTask()">
+      <input type="text" name="Title" [(ngModel)]="Title" placeholder="Title" />
+      <input type="text" name="Contents" [(ngModel)]="Contents" placeholder="Your activities" />
+      <input type="submit" value="Add task" />
+    </form>
+  </header>
+  <main>
+    <section class="task-list">
+      <h2>Tasks:</h2>
+      <div *ngFor="let task of tasks; let i = index" class="task">
+        <div class="content">
+          <input
+            type="text"
+            class="text"
+            [value]="task.Title"
+            [readonly]="!taskStates[i]"
+            #taskInput
+          />
+          <input
+            type="text"
+            class="text"
+            [value]="task.Contents"
+            [readonly]="!taskStates[i]"
+            #taskInputContent
+          />
+        </div>
+        <div class="actions">
+          <button
+            class="edit"
+            (click)="toggleEdit(i, taskInput, taskInputContent)"
+          >
+            {{ taskStates[i] ? 'Save' : 'Edit' }}
+          </button>
+          <button class="delete" (click)="deleteTask(i)">Delete</button>
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

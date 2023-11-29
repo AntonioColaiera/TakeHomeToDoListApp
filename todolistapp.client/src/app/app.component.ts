@@ -26,18 +26,26 @@ export class AppComponent {
   }
 
   // Function to toggle edit mode
+  taskStates: { [key: number]: boolean } = {};
+
   toggleEdit(index: number, taskInput: HTMLInputElement, taskInputContent: HTMLInputElement) {
-    if (this.editMode[index]) {
-      this.editMode[index] = false;
+    if (this.taskStates[index]) {
+      this.taskStates[index] = false;
       taskInput.setAttribute('readonly', 'true');
       this.editButtonText = 'Edit'; 
     } else {
-      this.editMode[index] = true;
+      Object.keys(this.taskStates).forEach((key: string) => {
+        const parsedKey = parseInt(key, 10);
+        this.taskStates[parsedKey] = false;
+      });
+      this.taskStates[index] = true;
       taskInput.removeAttribute('readonly');
       taskInput.focus();
       this.editButtonText = 'Save';
     }
   }
+  
+
 
   // Function to delete a task
   deleteTask(index: number) {
