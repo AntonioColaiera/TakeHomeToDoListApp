@@ -30,17 +30,14 @@ export class AppComponent implements OnInit {
           if (task.id) {
             const existingTask = this.tasks.find(t => t.id === task.id);
             if (existingTask) {
-              return existingTask; // Utilizza l'ID esistente
+              return existingTask;
             } else {
-              console.error('Error: Task ID not found in current list');
               return task;
             }
           } else {
-            console.error('Error: Task ID is undefined');
             return task;
           }
         });
-        console.log('Tasks after mapping:', this.tasks);
       },
       error => {
         console.error('Error fetching tasks:', error);
@@ -69,6 +66,7 @@ export class AppComponent implements OnInit {
 
   toggleEdit(index: number, taskInput: HTMLInputElement, taskInputContent: HTMLInputElement) {
     if (this.taskStates[index]) {
+      this.updateTask(index, taskInput.value, taskInputContent.value);
       this.taskStates[index] = false;
       taskInput.setAttribute('readonly', 'true');
       this.editButtonText = 'Edit';
@@ -85,15 +83,24 @@ export class AppComponent implements OnInit {
       console.log('Edit mode enabled');
     }
   }
+  
   updateTask(index: number, title: string, contents: string) {
     const task = this.tasks[index];
     task.title = title;
     task.contents = contents;
-    this.todoListService.updateTask(task).subscribe(updatedTask => {
-      this.tasks[index] = updatedTask;
-      console.log('Task updated:', updatedTask);
-    });
+    console.log('Task before update:', task);
+    this.todoListService.updateTask(task).subscribe(
+      updatedTask => {
+        console.log('Response from server:', updatedTask); 
+        this.tasks[index] = updatedTask;
+        console.log('Task updated:', updatedTask);
+      },
+      error => {
+        console.error('Error updating task:', error);
+      }
+    );
   }
+  
   
   deleteTask(index: number) {
     const task = this.tasks[index];

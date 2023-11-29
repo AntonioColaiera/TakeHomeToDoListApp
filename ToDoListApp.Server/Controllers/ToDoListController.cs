@@ -1,6 +1,4 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoListApp.Server.DbContext;
@@ -62,7 +60,6 @@ namespace ToDoListApp.Server.Controllers
 
             return CreatedAtAction(nameof(GetToDoListById), new { id = toDoList.Id }, toDoList);
         }
-
         // PUT: api/ToDoList/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateToDoList(Guid id, [FromBody] ToDoList updatedToDoList)
@@ -89,8 +86,9 @@ namespace ToDoListApp.Server.Controllers
             _context.ToDoLists.Update(toDoList);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(toDoList); // Return the updated Task
         }
+
 
         // DELETE: api/ToDoList/{id}
         [HttpDelete("{id}")]
