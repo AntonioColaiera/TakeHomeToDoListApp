@@ -11,8 +11,8 @@
   <header>
     <h1>TO DO LIST:</h1>
     <form (ngSubmit)="addTask()">
-      <input type="text" name="Title" [(ngModel)]="Title" placeholder="Title" />
-      <input type="text" name="Contents" [(ngModel)]="Contents" placeholder="Your activities" />
+      <input type="text" name="Title" [(ngModel)]="title" placeholder="Title" />
+      <input type="text" name="Contents" [(ngModel)]="contents" placeholder="Your activities" />
       <input type="submit" value="Add task" />
     </form>
   </header>
@@ -24,27 +24,25 @@
           <input
             type="text"
             class="text"
-            [value]="task.Title"
+            [value]="task.title"
             [readonly]="!taskStates[i]"
             #taskInput
           />
           <input
             type="text"
             class="text"
-            [value]="task.Contents"
+            [value]="task.contents"
             [readonly]="!taskStates[i]"
             #taskInputContent
           />
         </div>
-        <div class="actions">
-          <button
-            class="edit"
-            (click)="toggleEdit(i, taskInput, taskInputContent)"
-          >
-            {{ taskStates[i] ? 'Save' : 'Edit' }}
-          </button>
-          <button class="delete" (click)="deleteTask(i)">Delete</button>
-        </div>
+       <div class="actions">
+    <button class="edit" (click)="toggleEdit(i, taskInput, taskInputContent)">
+      {{ taskStates[i] ? 'Save' : 'Edit' }}
+    </button>
+    
+    <button class="delete" (click)="deleteTask(i)">Delete</button>
+  </div>
       </div>
     </section>
   </main>

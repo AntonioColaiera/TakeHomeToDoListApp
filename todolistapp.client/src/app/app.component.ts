@@ -1,35 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Task } from './app.model';
 import { v4 as uuidv4 } from 'uuid';
+import { TodoListService } from './app.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-
-
-export class AppComponent {
-  Title: string = ''; 
-  Contents: string = ''; 
+export class AppComponent implements OnInit {
+  title: string = ''; 
+  contents: string = ''; 
   tasks: Task[] = [];
   editMode: boolean[] = [];
   editButtonText: string = 'Edit'; 
 
-    // Function to add a new task
-    addTask() {
-      if (this.Title.trim() !== '' && this.Contents.trim() !== '') {
-        const newTask = new Task(uuidv4(), this.Title, this.Contents, new Date());
-        this.tasks.push(newTask);
-        this.editMode.push(false);
-        this.Title = '';
-        this.Contents = '';
-        console.log('New Task Added:', newTask);
-      }
-    }
-    
-  
+  constructor(private todoListService: TodoListService) {}
 
+  ngOnInit() {
+    this.getTasks();
+    console.log('Tasks loaded on Init:', this.tasks);
+  }
+  
+  getTasks() {
+    this.todoListService.getTasks().subscribe(
+      tasks => {
+        this.tasks = tasks.map(task => {
+          console.log('Task retrieved:', task);
+          if (task.id) {
+            const existingTask = this.tasks.find(t => t.id === task.id);
+            if (existingTask) {
+              return existingTask; // Utilizza l'ID esistente
+            } else {
+              console.error('Error: Task ID not found in current list');
+              return task;
+            }
+          } else {
+            console.error('Error: Task ID is undefined');
+            return task;
+          }
+        });
+        console.log('Tasks after mapping:', this.tasks);
+      },
+      error => {
+        console.error('Error fetching tasks:', error);
+      }
+    );
+  }
+  
+  
+  
+  
+  addTask() {
+    if (this.title.trim() !== '' && this.contents.trim() !== '') {
+      const newTask = new Task(uuidv4(), this.title, this.contents, new Date());
+      this.todoListService.createTask(newTask).subscribe(task => {
+        this.tasks.push(task);
+        this.editMode.push(false);
+        this.title = '';
+        this.contents = '';
+        console.log('New Task Added:', task);
+      });
+    }
+  }
 
   // Function to toggle edit mode
   taskStates: { [key: number]: boolean } = {};
@@ -38,7 +71,8 @@ export class AppComponent {
     if (this.taskStates[index]) {
       this.taskStates[index] = false;
       taskInput.setAttribute('readonly', 'true');
-      this.editButtonText = 'Edit'; 
+      this.editButtonText = 'Edit';
+      console.log('Edit mode disabled');
     } else {
       Object.keys(this.taskStates).forEach((key: string) => {
         const parsedKey = parseInt(key, 10);
@@ -48,14 +82,39 @@ export class AppComponent {
       taskInput.removeAttribute('readonly');
       taskInput.focus();
       this.editButtonText = 'Save';
+      console.log('Edit mode enabled');
+    }
+  }
+  updateTask(index: number, title: string, contents: string) {
+    const task = this.tasks[index];
+    task.title = title;
+    task.contents = contents;
+    this.todoListService.updateTask(task).subscribe(updatedTask => {
+      this.tasks[index] = updatedTask;
+      console.log('Task updated:', updatedTask);
+    });
+  }
+  
+  deleteTask(index: number) {
+    const task = this.tasks[index];
+    console.log('Task selected:', task);
+  
+    if (task && task.id) {
+     this.todoListService.deleteTask(task.id).subscribe(
+        () => {
+          this.tasks.splice(index, 1);
+          this.editMode.splice(index, 1);
+
+        },
+        (error) => {
+          console.error('Error deleting task:', error);
+        }
+      );
+    } else {
+      console.error('Invalid task ID');
     }
   }
   
-
-
-  // Function to delete a task
-  deleteTask(index: number) {
-    this.tasks.splice(index, 1);
-    this.editMode.splice(index, 1);
+  
   }
-}
+

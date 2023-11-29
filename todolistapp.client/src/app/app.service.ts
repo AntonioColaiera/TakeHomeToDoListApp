@@ -11,6 +11,7 @@ export class TodoListService {
 
   constructor(private http: HttpClient) {}
 
+
   // Get tasks from the API
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}`);
@@ -23,7 +24,7 @@ export class TodoListService {
 
   // Update an existing task by sending updated data to the server
   updateTask(updatedTask: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${updatedTask.Id}`, updatedTask);
+    return this.http.put<Task>(`${this.apiUrl}/${updatedTask.id}`, updatedTask);
   }
 
   // Delete a task from the server using the task ID
