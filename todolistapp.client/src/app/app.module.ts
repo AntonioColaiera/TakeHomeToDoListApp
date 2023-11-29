@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
-const routes: Routes = [
-  { path: 'api/ToDoList', component: AppComponent }
-];
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +12,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes) 
+    FormsModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

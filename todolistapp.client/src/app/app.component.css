@@ -1,31 +1,22 @@
-﻿/* Variable definitions */
-:root {
-  --dark: #374151;
-  --darker: #1f2937;
-  --darkest: #111827;
-  --grey: #6b7280;
-  --pink: #ec4899;
-  --purple: #8b5cf6;
-  --light: #eee;
-}
-
-/* Global styles */
-* {
+﻿* {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: "Fira sans", sans-serif;
 }
 
-/* Body styles */
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   color: #fff;
   background-color: #374151;
+  border-radius: 5px;
+  border: 5px solid;
+  border-image-source: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  border-image-slice: 1;
 }
 
-/* Header styles */
 header {
   padding: 2rem 1rem;
   max-width: 800px;
@@ -40,7 +31,6 @@ header h1 {
   margin-bottom: 1rem;
 }
 
-/* Form styles */
 #new-task-form {
   display: flex;
 }
@@ -53,38 +43,23 @@ button {
   background: none;
 }
 
-/* Styles for new-task-input */
-#new-task-input {
+input[name="Title"],
+input[name="Contents"] {
   flex: 1 1 0%;
   background-color: #1f2937;
   padding: 1rem;
   border-radius: 1rem;
   margin-right: 1rem;
+  font-size: 1.2rem;
   color: #3490dc;
-  font-size: 1.25rem;
-}
-
-#new-task-input::placeholder {
-  color: #6b7280;
-}
-
-/* Styles for new-contents-input */
-#new-contents-input {
-  flex: 1 1 0%;
-  background-color: #1f2937;
-  padding: 1rem;
-  border-radius: 1rem;
-  margin-right: 1rem;
   color: #ec4899;
-  font-size: 1rem;
 }
 
-#new-contents-input::placeholder {
+input::placeholder {
   color: #6b7280;
 }
 
-/* Submit button styles */
-#new-task-submit {
+input[type="submit"] {
   color: #ec4899;
   font-size: 1.25rem;
   font-weight: 700;
@@ -95,15 +70,14 @@ button {
   transition: 0.4s;
 }
 
-#new-task-submit:hover {
+input[type="submit"]:hover {
   opacity: 0.8;
 }
 
-#new-task-submit:active {
+input[type="submit"]:active {
   opacity: 0.6;
 }
 
-/* Main section styles */
 main {
   flex: 1 1 0%;
   max-width: 800px;
@@ -111,7 +85,6 @@ main {
   margin: 0 auto;
 }
 
-/* Task list styles */
 .task-list {
   padding: 1rem;
 }
@@ -123,8 +96,7 @@ main {
   margin-bottom: 1rem;
 }
 
-/* Task styles */
-#tasks .task {
+.task {
   display: flex;
   justify-content: space-between;
   background-color: #111827;
@@ -138,26 +110,23 @@ main {
 }
 
 .task .content .text {
-  color: #eee;
-  font-size: 1.125rem;
   width: 100%;
   display: block;
   transition: 0.4s;
+  color: #eee;
+  font-size: 1.125rem;
 }
 
-/* Title style */
 .task .content .text[readonly]:first-of-type {
   color: #3490dc;
   font-size: 1.5rem;
 }
 
-/* Content style */
 .task .content .text[readonly]:last-of-type {
   color: #ec4899;
   font-size: 1rem;
 }
 
-/* Task action buttons styles */
 .task .actions {
   display: flex;
   margin: 0 -0.5rem;
@@ -188,9 +157,4 @@ main {
 
 .task .actions .delete {
   color: crimson;
-}
-
-/* Additional styles */
-#prova {
-  border: 2px solid red;
 }
