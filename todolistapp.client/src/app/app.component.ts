@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { Task } from './app.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
+
+
 export class AppComponent {
   Title: string = ''; 
   Contents: string = ''; 
@@ -13,17 +16,20 @@ export class AppComponent {
   editMode: boolean[] = [];
   editButtonText: string = 'Edit'; 
 
-  // Function to add a new task
-  addTask() {
-    if (this.Title.trim() !== '' && this.Contents.trim() !== '') {
-      const newTask = new Task('', this.Title, this.Contents, new Date()); 
-      this.tasks.push(newTask);
-      this.editMode.push(false);
-      this.Title = ''; 
-      this.Contents = ''; 
-      console.log('New Task Added:', newTask);
+    // Function to add a new task
+    addTask() {
+      if (this.Title.trim() !== '' && this.Contents.trim() !== '') {
+        const newTask = new Task(uuidv4(), this.Title, this.Contents, new Date());
+        this.tasks.push(newTask);
+        this.editMode.push(false);
+        this.Title = '';
+        this.Contents = '';
+        console.log('New Task Added:', newTask);
+      }
     }
-  }
+    
+  
+
 
   // Function to toggle edit mode
   taskStates: { [key: number]: boolean } = {};
