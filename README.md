@@ -2,7 +2,7 @@
 
 ## Here are the most important features that I implemented to complete the exercise
 
-## Angular ToDo List Application
+## Angular ToDo List Application (Front End)
 
 ### `AppRoutingModule`
 
@@ -32,6 +32,51 @@ The `AppComponent` is the main component managing the ToDo list application. Key
 - **Updating a Task**: Sends updated task information to the server for storage.
 - **Deleting a Task**: Removes tasks from the list and the server using `TodoListService`.
 - **Animations**: Utilizes the `Animation` animation for welcome message display.
+
+## .Net ToDo List Application (Back End)
+
+
+#### `ToDoListApp.Server`
+
+* The `ToDoListApp.Server` project encompasses the back-end functionality of the ToDo list application. It is built using ASP.NET Core and provides an API for managing tasks.
+
+#### `Startup.cs`
+
+* The `Startup.cs` file serves as the application's entry point. It configures the essential services and middleware for the ASP.NET Core application. This includes:
+    * Registering services: Defines dependencies for the application, such as the `ToDoListAppDbContext`.
+    * Configuring routing: Sets up route templates for handling API requests.
+    * Enabling CORS: Allows cross-origin resource sharing to handle requests from the Angular front-end.
+    * Setting up error handling: Establishes middleware for handling exceptions and errors gracefully.
+
+#### `ToDoListAppDbContext`
+
+* The `ToDoListAppDbContext` inherits from `DbContext` and manages database interactions. It defines a `DbSet` property for the `ToDoList` entity, enabling access to the relevant table in the database.
+
+#### `ToDoList` Model
+
+* The `ToDoList` model represents a task in the application. It contains properties for task identification, title, description, and completion status.
+
+#### `ToDoListController`
+
+* The `ToDoListController` is an ASP.NET Core controller responsible for handling API requests related to tasks. It defines methods for various task management operations:
+    * `GET /api/todolists`: Retrieves a list of all tasks from the database.
+    * `GET /api/todolists/{id}`: Retrieves a specific task based on its ID.
+    * `POST /api/todolists`: Creates a new task and adds it to the database.
+    * `PUT /api/todolists/{id}`: Updates an existing task with the provided information.
+    * `DELETE /api/todolists/{id}`: Deletes a task from the database based on its ID.
+
+These methods interact with the `ToDoListAppDbContext` to perform database (PostgreSQL) operations, ensuring data persistence through EntityFramework Core.
+
+#### Database Migration
+
+* The application employs Entity Framework Core's migrations to manage database schema changes. The `dotnet ef migrations add <migration-name>` command generates migration scripts, and `dotnet ef database update` applies those scripts to the database.
+
+#### Integration with Angular Front End
+
+* The Angular front-end application communicates with the ASP.NET Core back-end API using HTTP requests. The `TodoListService` in the Angular application handles these interactions, sending and receiving data for task management operations.
+
+
+
 
 ![Test Image](https://github.com/AntonioColaiera/TakeHomeToDoListApp/blob/master/FE.png)
 
