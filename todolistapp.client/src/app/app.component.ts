@@ -3,10 +3,12 @@ import { Task } from './app.model';
 import { v4 as uuidv4 } from 'uuid';
 import { TodoListService } from './app.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  
 })
 export class AppComponent implements OnInit {
   title: string = ''; 
@@ -19,14 +21,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getTasks();
-    console.log('Tasks loaded on Init:', this.tasks);
   }
   
   getTasks() {
     this.todoListService.getTasks().subscribe(
       tasks => {
         this.tasks = tasks.map(task => {
-          console.log('Task retrieved:', task);
           if (task.id) {
             const existingTask = this.tasks.find(t => t.id === task.id);
             if (existingTask) {
