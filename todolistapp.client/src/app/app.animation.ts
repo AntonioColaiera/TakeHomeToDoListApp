@@ -1,11 +1,16 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
-export const appearDisappearAnimation = trigger('appearDisappear', [
-  transition(':enter', [
-    style({ opacity: 0 }),
-    animate('500ms ease-in-out', style({ opacity: 1 }))
+export const Animation = trigger('Animation', [
+  state('void', style({
+    opacity: 0
+  })),
+  state('*', style({
+    opacity: 1
+  })),
+  transition('void => *', [
+    animate('1s ease-in')
   ]),
-  transition(':leave', [
-    animate('500ms ease-in-out', style({ opacity: 0 }))
+  transition('* => void', [
+    animate('1s ease-out')
   ])
 ]);

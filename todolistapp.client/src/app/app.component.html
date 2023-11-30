@@ -1,50 +1,80 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To Do list 2023</title>
-  <link rel="stylesheet" href="app.component.css" />
-</head>
-<body>
-  <header>
-    <h1>TO DO LIST:</h1>
-    <form (ngSubmit)="addTask()">
-      <input type="text" name="Title" [(ngModel)]="title" placeholder="Title" />
-      <input type="text" name="Contents" [(ngModel)]="contents" placeholder="Your activities" />
-      <input type="submit" value="Add task" />
-    </form>
-  </header>
-  <main>
-    <section class="task-list">
-      <h2>Tasks:</h2>
-      <div *ngFor="let task of tasks; let i = index" class="task">
-        <div class="content">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do list 2023</title>
+    <link rel="stylesheet" href="app.component.css" />
+  </head>
+  <body>
+    <div [@Animation]>
+      <!-- Apply the animation -->
+      <header>
+        <h1>TO DO LIST:</h1>
+        <form (ngSubmit)="addTask()">
           <input
             type="text"
-            class="text"
-            [value]="task.title"
-            [readonly]="!taskStates[i]"
-            #taskInput
+            name="Title"
+            [(ngModel)]="title"
+            placeholder="Title"
           />
           <input
             type="text"
-            class="text"
-            [value]="task.contents"
-            [readonly]="!taskStates[i]"
-            #taskInputContent
+            name="Contents"
+            [(ngModel)]="contents"
+            placeholder="Your activities"
           />
-        </div>
-       <div class="actions">
-    <button class="edit" (click)="toggleEdit(i, taskInput, taskInputContent)">
-      {{ taskStates[i] ? 'Save' : 'Edit' }}
-    </button> 
-    <button class="delete" (click)="deleteTask(i)">Delete</button>
-  </div>
-      </div>
-    </section>
-  </main>
-
-</body>
+          <input type="submit" value="Add task" />
+        </form>
+      </header>
+      <main>
+        <section class="task-list">
+          <h2>Tasks:</h2>
+          <div *ngFor="let task of tasks; let i = index" class="task">
+            <div class="content">
+              <input
+                type="text"
+                class="text"
+                [value]="task.title"
+                [readonly]="!taskStates[i]"
+                #taskInput
+              />
+              <input
+                type="text"
+                class="text"
+                [value]="task.contents"
+                [readonly]="!taskStates[i]"
+                #taskInputContent
+              />
+            </div>
+            <div
+              @Animation
+              *ngIf="showWelcomeMessage"
+              style="
+                position: fixed;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.5);
+                padding: 1em;
+                border-radius: 1em 1em 0 0;
+              "
+            >
+              Welcome back!
+            </div>
+            <div class="actions">
+              <button
+                class="edit"
+                (click)="toggleEdit(i, taskInput, taskInputContent)"
+              >
+                {{ taskStates[i] ? "Save" : "Edit" }}
+              </button>
+              <button class="delete" (click)="deleteTask(i)">Delete</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
 </html>

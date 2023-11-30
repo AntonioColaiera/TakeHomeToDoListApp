@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from './app.model';
 import { v4 as uuidv4 } from 'uuid';
 import { TodoListService } from './app.service';
-
+import { Animation } from './app.animation';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  animations: [Animation]
   
 })
 export class AppComponent implements OnInit {
@@ -16,12 +17,18 @@ export class AppComponent implements OnInit {
   tasks: Task[] = [];
   editMode: boolean[] = [];
   editButtonText: string = 'Edit'; 
+  showWelcomeMessage = true;
 
   constructor(private todoListService: TodoListService) {}
 
   ngOnInit() {
     this.getTasks();
+
+    setTimeout(() => {
+      this.showWelcomeMessage = false;
+    }, 3000);
   }
+  
   
   getTasks() {
     this.todoListService.getTasks().subscribe(
