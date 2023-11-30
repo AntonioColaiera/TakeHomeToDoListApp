@@ -13,20 +13,26 @@
       <header>
         <h1>TO DO LIST:</h1>
         <form (ngSubmit)="addTask()">
+          <!-- Input field for Title -->
           <input
             type="text"
             name="Title"
             [(ngModel)]="title"
             placeholder="Title"
           />
+          
+          <!-- Input field for Contents -->
           <input
             type="text"
             name="Contents"
             [(ngModel)]="contents"
             placeholder="Your activities"
           />
+          
+          <!-- Submit button to add a task -->
           <input type="submit" value="Add task" />
         </form>
+        
       </header>
       <main>
         <section class="task-list">
@@ -48,6 +54,9 @@
                 #taskInputContent
               />
             </div>
+            <!-- This div represents a welcome message displayed to the user.
+              It's linked to the 'Animation' animation, appears based 
+              on the 'showWelcomeMessage' variable-->
             <div
               @Animation
               *ngIf="showWelcomeMessage"

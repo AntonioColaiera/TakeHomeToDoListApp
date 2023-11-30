@@ -1,10 +1,12 @@
-﻿* {
+﻿/* Global reset and default styles */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Fira sans", sans-serif;
 }
 
+/* Body styles */
 body {
   display: flex;
   flex-direction: column;
@@ -44,6 +46,7 @@ header h1 {
   display: flex;
 }
 
+/* Styling for input fields */
 input,
 button {
   appearance: none;
@@ -52,6 +55,7 @@ button {
   background: none;
 }
 
+/* Styling for input field with name 'Title' */
 input[name="Title"] {
   flex: 1 1 0%;
   background-color: #1f2937;
@@ -61,7 +65,7 @@ input[name="Title"] {
   font-size: 1.2rem;
   color: #3490dc;
 }
-
+/* Styling for input field with name 'Contents' */
 input[name="Contents"] {
   flex: 1 1 0%;
   background-color: #1f2937;
@@ -127,6 +131,7 @@ main {
   flex: 1 1 0%;
 }
 
+/* Text styles within task content */
 .task .content .text {
   width: 100%;
   display: block;
@@ -167,14 +172,14 @@ main {
   opacity: 0.6;
 }
 
+/* Edit button styles within task actions */
 .task .actions .edit {
   background-image: linear-gradient(to right, #ec4899, #8b5cf6);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+/* Delete button styles within task actions */
 .task .actions .delete {
   color: crimson;
 }
-
-
